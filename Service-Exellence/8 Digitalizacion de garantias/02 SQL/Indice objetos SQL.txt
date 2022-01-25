@@ -1,0 +1,20 @@
+[TABLAS]
+Tabla01, Descripcion
+Tabla02, Descripcion
+
+[ALTERS]
+ALTER01, Descripcio
+
+[TTRIGGERS]
+Triggers01, Descripcion
+
+[FUNCIONES]
+Funciones01, Descripcion
+
+[VISTAS]
+Vista01, Descripcion
+Vista02, Descripcion
+
+[Procedimientos]
+Procedimiento01, Descripcion
+Procedimiento02, Descripcion
