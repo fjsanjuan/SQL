@@ -1,0 +1,26 @@
+﻿select * from Administracion_ER
+select * from BodyS_ER
+select * from DeptoUsados_ER
+select * from EgresosFinan_ER
+select * from FI_ER
+select * from Gastos_ER
+select * from GastosBodyS_ER
+select * from GastosFI_ER
+select * from GastosRefacciones_ER
+select * from GastosTaller_ER
+select * from GastosUsados_ER
+select * from Impuestos_ER
+select * from IngresosFinan_ER
+select * from OtrosEgresos_ER
+select * from OtrosIngresos_ER
+--select * from Presupuestos_ER
+select * from Refacciones_ER
+select * from Taller_ER
+select * from Unidades_ER
+
+U - Unidades
+C - Comerciales
+I - Intercambios
+A - Autofin
+F - Flotilla
+T - Totales?

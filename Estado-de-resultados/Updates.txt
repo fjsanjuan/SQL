@@ -1,0 +1,8 @@
+INSERT INTO Usuarios_ER (Usuario, Password, Nivel, Nombre, ApellidoPaterno, ApellidoMaterno)
+VALUES ('Prueba', '123', 1, 'Usuario','Consulta','')
+
+INSERT INTO Usuarios_ER (Usuario, Password, Nivel, Nombre, ApellidoPaterno, ApellidoMaterno)
+VALUES ('Administrador', 'Presupuestos', 2, 'Administrador','Consulta','')
+
+
+UPDATE Presupuestos_ER SET Presupuesto = 0
