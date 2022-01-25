@@ -11,7 +11,7 @@ SELECT Venta.Empresa,
        ClaveCliente   = Venta.Cliente,   
        NombreCliente  = Cte.Nombre,   
        ClaveVehiculo  = Venta.ServicioArticulo,         
-       Vehiculo       = Art.Descripcion1,  
+       Vehiculo       = ISNULL(Art.Descripcion1,''),  
        ColorVehiculo  = ISNULL(ISNULL(NULLIF(RTRIM(LTRIM(Venta.ServicioDescripcion)),''), NULLIF(RTRIM(LTRIM(VIN.ColorExteriorDescripcion)),'')),''),  
        PlacasVehiculo = ISNULL(ISNULL(NULLIF(RTRIM(LTRIM(ServicioPlacas)),''), NULLIF(RTRIM(LTRIM(VIN.Placas)),'')),''),  
        Kilometraje    = ISNULL(ISNULL(NULLIF(ServicioKms,0),NULLIF(VIN.Km,0)),0),  
@@ -22,11 +22,11 @@ SELECT Venta.Empresa,
        ClaveAgente    = Venta.Agente,   
        NombreAgente   = Agente.Nombre,     
        EstatusCita    = Venta.Estatus,  
-    Fechayhora     = FechaEmision + ISNULL(NULLIF(RTRIM(LTRIM(HoraRecepcion)),''),'00:00'),  
+       Fechayhora     = FechaEmision + ISNULL(NULLIF(RTRIM(LTRIM(HoraRecepcion)),''),'00:00'),  
        Venta.ID,
-		ISNULL(Venta.CFechaLlegada,0) as CFechaLlegada,
-		ISNULL(Venta.CFechaAtencion,0) as CFechaAtencion,
-		NoShow = (SELECT COUNT(*) from MovBitacora where ID = Venta.ID AND Tipo ='No Show')
+	   ISNULL(Venta.CFechaLlegada,0) as CFechaLlegada,
+	   ISNULL(Venta.CFechaAtencion,0) as CFechaAtencion,
+       NoShow = (SELECT COUNT(*) from MovBitacora where ID = Venta.ID AND Tipo ='No Show')
       FROM Venta WITH(NOLOCK)
       JOIN Cte WITH(NOLOCK)             ON Venta.Cliente          = Cte.Cliente        
       JOIN Art WITH(NOLOCK)             ON Venta.ServicioArticulo = Art.Articulo         

@@ -1,0 +1,1 @@
+ALTER TABLE dbo.presupuesto_detalle ADD quien_autoriza VARCHAR(30) NULL, fecha_autorizacion datetime NULL ;

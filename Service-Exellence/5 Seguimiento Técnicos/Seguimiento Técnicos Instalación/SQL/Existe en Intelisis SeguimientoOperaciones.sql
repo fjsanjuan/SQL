@@ -12,6 +12,10 @@ Target Server Version : 105000
 File Encoding         : 65001
 
 Date: 2016-09-30 12:25:04
+
+Ejecutar solo si no existe en Intelisis
+
+
 */
 
 
