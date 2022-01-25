@@ -1,4 +1,4 @@
-ALTER VIEW [dbo].[vwOrdenesServicioMonitor] AS 
+CREATE VIEW [dbo].[vwOrdenesServicioMonitor] AS 
 	select       
 		 o.empresa as Empresa,  
 		 o.Sucursal as Sucursal,  

@@ -28,19 +28,12 @@ ALTER TABLE orden_servicio_inspeccion ADD sfrenos_refNeumat varchar(20)
 ALTER TABLE orden_servicio_inspeccion ADD reqRev_inferior bit
 ALTER TABLE orden_servicio_inspeccion ADD reqRev_sistFrenos bit
 
---falta en azcapozalco
-ALTER TABLE orden_servicio_inspeccion ADD extension_garantia varchar(2) DEFAULT 'no'
-
 ALTER TABLE firma_electronica ADD firma_formatoInventario nvarchar(MAX);
-
--- se agrega campo para guardar la firma para nuevo formato Carta de renuncia a beneficios ford
-ALTER TABLE firma_electronica ADD firma_renunciaGarantia nvarchar(max)  NULL;
-
 
 ALTER TABLE presupuesto_detalle ADD comentario varchar(255);
 
 
--- campo necesario para el de recepcion integracion con campos de profeco para fame
+
 ALTER TABLE orden_servicio_inspeccion ADD profecoFame varchar(100)
 
 --verificar si aplica o no 
@@ -49,25 +42,6 @@ ALTER TABLE orden_servicio_inspeccion ADD profecoFame varchar(100)
 -- es para los campos de luces del inventario de inspeccion ravisa
 ALTER TABLE dbo.orden_servicio_inspeccion ALTER COLUMN luces_int varchar(55) NULL
 
--- es para guardar los datos en los campos de luces del tablero en ravisa (inicadores de falla activados) ravisa
+-- es para guardar los datos en los campos de luces del tablero en ravisa (inicadores de falla activados
+
 ALTER TABLE orden_servicio_inspeccion ADD luces_tablero varchar(100)
-
-
-
---se agregan campo tickaje tipo bit  que controlara si la agencia lleva el control de llegada y atencion de las citas
-ALTER TABLE sucursal ADD tickaje bit ;
-
---se agregan campos de configuracion smtp a la tabla sucursal para el envio de correos por sucursal
-ALTER TABLE sucursal ADD mail_host varchar(90), mail_smtpAuth bit, mail_userName varchar(90), mail_password varchar(65), mail_smtpSecure varchar(10), mail_port int ;
-
---se agregan campos registro de (True / False) de la aprobación del cliente de terminos y condiciones, así como el registro de fecha / hora  correccion Contrato de Adhesión
-ALTER TABLE orden_servicio ADD acepta_termCond bit null, fecha_termCond dateTime null ;
-
--- modificacion de campo para generar presupuestos con punto decimal y evitar error  
-ALTER TABLE presupuesto_detalle ALTER COLUMN cantidad float
-
-
-
-
-
-

@@ -10,7 +10,7 @@ AS BEGIN
 	DECLARE
 		@RES VARCHAR ( 40 ) 
  
-			Select top 1  @RES= Estado from SeguimientoOperaciones 
+			Select top 1  @RES= Estado from CA_SeguimientoOperaciones 
 			where idVenta =@idVenta AND Renglon = @renglon  AND  RenglonId = @renglonID
 			
 			ORDER BY id Desc

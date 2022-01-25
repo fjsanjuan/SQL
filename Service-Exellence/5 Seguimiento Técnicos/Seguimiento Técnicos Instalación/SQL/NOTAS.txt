@@ -1,0 +1,6 @@
+Intalacion en version 6000 
+
+
+1.- Ejecutar scripts de la carpeta tablas 
+
+2.- Ejecutar el scrip seguimientoTecnicosWeb de la carpeta Vistas

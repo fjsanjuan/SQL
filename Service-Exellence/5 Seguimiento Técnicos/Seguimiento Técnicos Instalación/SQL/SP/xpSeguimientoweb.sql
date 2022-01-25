@@ -14,16 +14,16 @@ BEGIN
     @IdSeg      int
 		--@Realizado VARCHAR(2)
    
-  IF EXISTS (SELECT * FROM SeguimientoOperaciones WHERE idVenta = @IdVenta AND Renglon = @Renglon AND RenglonId = @RenglonId AND Estado = @Edo) 
+  IF EXISTS (SELECT * FROM CA_SeguimientoOperaciones WHERE idVenta = @IdVenta AND Renglon = @Renglon AND RenglonId = @RenglonId AND Estado = @Edo) 
   BEGIN
-  SELECT @IdSeg = (SELECT TOP(1) Id FROM SeguimientoOperaciones WHERE idVenta = @IdVenta 
+  SELECT @IdSeg = (SELECT TOP(1) Id FROM CA_SeguimientoOperaciones WHERE idVenta = @IdVenta 
                       AND Renglon = @Renglon AND RenglonId = @RenglonId AND Estado = @Edo ORDER BY ID DESC)
-    UPDATE SeguimientoOperaciones
+    UPDATE CA_SeguimientoOperaciones
        SET FechaFin = CURRENT_TIMESTAMP
      WHERE Id = @IdSeg
 
   END
-  INSERT INTO SeguimientoOperaciones
+  INSERT INTO CA_SeguimientoOperaciones
          (IdVenta , Renglon , RenglonId , Estado, FechaInicio, FechafIN, Usuario, Comentarios )
   VALUES (@IdVenta, @Renglon, @RenglonId, @Nuevo, CURRENT_TIMESTAMP, NULL, NULL ,NULLIF(@Comentarios,''))
 

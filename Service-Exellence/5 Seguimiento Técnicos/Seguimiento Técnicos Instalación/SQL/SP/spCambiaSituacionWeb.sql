@@ -23,7 +23,7 @@ SELECT @NuevaSituacion = NULL
     END
     ELSE IF @Detiene = 'Si' AND @Situacion IN ('Reactivar','En Curso','En Proceso')
     BEGIN
-      IF EXISTS(SELECT * FROM SeguimientoOperaciones WHERE Estado = 'En Curso' AND IdVenta = @IdVenta)  
+      IF EXISTS(SELECT * FROM CA_SeguimientoOperaciones WHERE Estado = 'En Curso' AND IdVenta = @IdVenta)  
         SELECT @NuevaSituacion = 'En Proceso'  
       ELSE  
         SELECT @NuevaSituacion = 'Asignada'
@@ -33,4 +33,3 @@ END
       
 
 
-GO

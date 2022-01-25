@@ -1,0 +1,8 @@
+CAMBIAR EL NOMBRE DE LAS TABLAS spGenerarDetalleST
+
+
+
+
+vwPaquetesWebCr  POR vwCA_vwPaquetesWebCr
+
+PaquetesTodos    POR vwCA_PaquetesTodos
