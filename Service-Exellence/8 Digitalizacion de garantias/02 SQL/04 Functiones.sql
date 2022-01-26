@@ -1,4 +1,4 @@
---función de procedimiento para clonar solo el encabezado de una orden pública para una orden de garantía 
+--funciï¿½n de procedimiento para clonar solo el encabezado de una orden pï¿½blica para una orden de garantï¿½a 
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[xpCA_CopiarSoloEncabezadoGarantia]') AND type IN ('P'))
 	DROP TABLE [dbo].[xpCA_CopiarSoloEncabezadoGarantia]
 GO
@@ -107,3 +107,45 @@ IF @Modulo = 'VTAS'
     INSERT MovTiempo (Modulo,  Sucursal,  ID,         Usuario,  FechaInicio, FechaComenzo, Estatus) 
                VALUES(@Modulo, @Sucursal, @GenerarID, @Usuario, GETDATE(),   GETDATE(),    @Estatus)
 END
+
+
+/* =============================================
+-- Autor: Francisco  San Juan
+-- CreaciÃ³n: 25/01/2022
+-- Ejemplo: En la vista vwCA_GarantiasPartsOperaciones se utiliza solo filtrar por orden(MOVID) con varios articulos en ella 
+-- DescripciÃ³n:  Funcion para obtener la division de la clave de fabrica de los articulos tipo refacciones en una orden de servicio de tipo gantÃ­a se hizo 
+   copia de la funcion fnParteCodigo que se utliza para la interfaz de dashboard
+-- =============================================*/
+IF EXISTS (SELECT * FROM SYSOBJECTS WHERE ID = OBJECT_ID('dbo.fnCA_ParteCodigoGrtias') AND Type = 'FN')
+  DROP FUNCTION dbo.fnCA_ParteCodigoGrtias
+GO 
+CREATE FUNCTION fnCA_ParteCodigoGrtias  
+ (@Codigo char(22),  
+  @Parte int)  
+RETURNS char(20)  
+AS  
+BEGIN  
+    declare @fnParteCodigo char(20)  
+    declare @Parte0   char(20)  
+  
+   SELECT @Parte0 = SUBSTRING(@Codigo,PATINDEX ( '%-%' , @Codigo )+1 ,LEN(@Codigo))  
+   IF @Parte=1   
+    SELECT @fnParteCodigo = (Case When CHARINDEX('-',@Codigo) = 0  
+      Then NULL  
+      Else SUBSTRING(@Codigo,1,CHARINDEX('-',@Codigo)-1)  
+      End)  
+   IF @Parte=2   
+    SELECT @fnParteCodigo = (Case When CHARINDEX('-',@Parte0) = 0 or LEN(@Parte0)<2  
+      Then @Parte0   
+      Else SUBSTRING(@Parte0,1,CHARINDEX('-', @Parte0)-1)   
+      End)  
+   IF @Parte=3  
+    SELECT @fnParteCodigo = (Case When CHARINDEX('-',@Parte0) = 0 or LEN(@Parte0)<2  
+      Then NULL  
+      Else SUBSTRING(@Parte0,CHARINDEX('-', @Parte0)+1,LEN(@Parte0))   
+      End)  
+
+   SELECT @fnParteCodigo = ISNULL(@fnParteCodigo,'')
+
+   RETURN (@fnParteCodigo)  
+END  
