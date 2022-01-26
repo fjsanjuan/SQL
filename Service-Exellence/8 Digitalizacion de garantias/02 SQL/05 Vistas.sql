@@ -8,7 +8,8 @@ IF EXISTS (SELECT * FROM SYSOBJECTS WHERE ID = OBJECT_ID('dbo.vwCA_GarantiasPart
 GO
 CREATE VIEW vwCA_GarantiasPartsOperaciones 
 AS  
-SELECT Articulo			= Art.ClaveFabricante,
+SELECT IdVenta			= VentaD.Id,
+       Articulo			= Art.ClaveFabricante,
 	   Tipo				= Art.Tipo,
 	   PREFIJO			= dbo.fnCA_ParteCodigoGrtias(rtrim(ltrim(Art.ClaveFabricante)),1),  
 	   BASICO			= dbo.fnCA_ParteCodigoGrtias(rtrim(ltrim(Art.ClaveFabricante)),2),
@@ -23,6 +24,7 @@ SELECT Articulo			= Art.ClaveFabricante,
 	   FROM VentaD 
 			-- validar por que solo debe aplicar para articulo de tipo normal es decir de tipo refacciones
 			JOIN art on ventad.articulo = art.articulo --and art.tipo = 'Normal' 
-	   WHERE ID = 386560  AND ventad.cantidad > isnull( ventad.cantidadcancelada, 0 ) 
+	   WHERE ventad.cantidad > isnull( ventad.cantidadcancelada, 0 ) 
+       --AND ID = 386560 
 	
-	   GROUP BY precio,cantidad,ventad.impuesto1,ventad.articulo,DescripcionExtra,Agente,Art.ClaveFabricante,art.Tipo
+	   GROUP BY precio,cantidad,ventad.impuesto1,ventad.articulo,DescripcionExtra,Agente,Art.ClaveFabricante,art.Tipo,VentaD.Id
