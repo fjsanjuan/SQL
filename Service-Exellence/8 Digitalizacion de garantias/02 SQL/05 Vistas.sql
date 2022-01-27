@@ -9,17 +9,19 @@ GO
 CREATE VIEW vwCA_GarantiasPartsOperaciones 
 AS  
 SELECT IdVenta			= VentaD.Id,
-       Articulo			= Art.ClaveFabricante,
-	   Tipo				= Art.Tipo,
-	   PREFIJO			= dbo.fnCA_ParteCodigoGrtias(rtrim(ltrim(Art.ClaveFabricante)),1),  
-	   BASICO			= dbo.fnCA_ParteCodigoGrtias(rtrim(ltrim(Art.ClaveFabricante)),2),
-	   SUFIJO			= dbo.fnCA_ParteCodigoGrtias(rtrim(ltrim(Art.ClaveFabricante)),3),
-	   Iva_total		= (Precio * Cantidad) + ( ( SUM ( ( Precio * Cantidad ) ) * ventad.Impuesto1 ) / 100 ) ,  
-	   Descripcion		= DescripcionExtra,
-	   Cantidad			= cantidad,
-	   Precio_unitario	= Precio ,
-	   Total			= (Precio * Cantidad) ,
-	   FordStar			= ( SELECT TOP 1 FordStar FROM Agente WHERE Agente.Agente = VentaD.Agente ) 
+       articulo			= Art.ClaveFabricante,
+	   tipo				= Art.Tipo,
+	   prefijo			= dbo.fnCA_ParteCodigoGrtias(rtrim(ltrim(Art.ClaveFabricante)),1),  
+	   basico			= dbo.fnCA_ParteCodigoGrtias(rtrim(ltrim(Art.ClaveFabricante)),2),
+	   sufijo			= dbo.fnCA_ParteCodigoGrtias(rtrim(ltrim(Art.ClaveFabricante)),3),
+	   iva_total		= (Precio * Cantidad) + ( ( SUM ( ( Precio * Cantidad ) ) * ventad.Impuesto1 ) / 100 ) ,  
+	   descripcion		= DescripcionExtra,
+	   cantidad			= cantidad,
+	   precio_unitario	= Precio ,
+	   importe			= (Precio * Cantidad) ,
+	   FordStar			= ( SELECT TOP 1 FordStar FROM Agente WHERE Agente.Agente = VentaD.Agente ),
+	  RenglonID			= MAX(RenglonID),
+	  Renglon			= MAX(Renglon)
 		
 	   FROM VentaD 
 			-- validar por que solo debe aplicar para articulo de tipo normal es decir de tipo refacciones
