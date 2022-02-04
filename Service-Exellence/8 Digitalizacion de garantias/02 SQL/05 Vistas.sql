@@ -21,7 +21,10 @@ SELECT IdVenta			= VentaD.Id,
 	   importe			= (Precio * Cantidad) ,
 	   FordStar			= ( SELECT TOP 1 FordStar FROM Agente WHERE Agente.Agente = VentaD.Agente ),
 	  RenglonID			= MAX(RenglonID),
-	  Renglon			= MAX(Renglon)
+	  Renglon			= MAX(Renglon),
+	  RenglonSub		= MAX(RenglonSub),
+	  Agente			= VentaD.Agente,
+	  Nombre			= ( SELECT TOP 1 Agente.Nombre FROM Agente WHERE Agente.Agente = VentaD.Agente )
 		
 	   FROM VentaD 
 			-- validar por que solo debe aplicar para articulo de tipo normal es decir de tipo refacciones
