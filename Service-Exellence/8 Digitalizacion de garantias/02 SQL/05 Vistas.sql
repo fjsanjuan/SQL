@@ -37,7 +37,7 @@ SELECT IdVenta			= VentaD.Id,
 -- =============================================
 -- Autor:Manuel López V.
 -- Creación: 04/02/2022
--- Descripción: Vista para obtener los técnicos disponibles en las garantías web para FORD se utiliza con filtro de SSucursalEmpresa
+-- Descripción: Vista para obtener los técnicos disponibles en las garantías web para FORD se utiliza con filtro de SucursalEmpresa
 -- =============================================
 IF EXISTS (SELECT * FROM SYSOBJECTS WHERE ID = OBJECT_ID('dbo.vwCA_GarantiasTecnicosDisponibles') AND Type = 'V')
   DROP VIEW dbo.vwCA_GarantiasTecnicosDisponibles
