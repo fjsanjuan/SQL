@@ -33,3 +33,18 @@ SELECT IdVenta			= VentaD.Id,
        --AND ID = 386560 
 	
 	   GROUP BY precio,cantidad,ventad.impuesto1,ventad.articulo,DescripcionExtra,Agente,Art.ClaveFabricante,art.Tipo,VentaD.Id
+
+-- =============================================
+-- Autor:Manuel López V.
+-- Creación: 04/02/2022
+-- Descripción: Vista para obtener los técnicos disponibles en las garantías web para FORD se utiliza con filtro de SSucursalEmpresa
+-- =============================================
+IF EXISTS (SELECT * FROM SYSOBJECTS WHERE ID = OBJECT_ID('dbo.vwCA_GarantiasTecnicosDisponibles') AND Type = 'V')
+  DROP VIEW dbo.vwCA_GarantiasTecnicosDisponibles
+GO
+CREATE VIEW vwCA_GarantiasTecnicosDisponibles AS
+	SELECT * FROM Agente
+	WHERE "Tipo" = 'Mecanico'
+	AND "Estatus" = 'ALTA'
+	AND "Categoria" = 'Servicio'
+	AND "Jornada" IS NOT NULL
