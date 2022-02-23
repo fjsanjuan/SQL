@@ -20,15 +20,23 @@ SELECT IdVenta			= VentaD.Id,
 	   precio_unitario	= Precio ,
 	   importe			= (Precio * Cantidad) ,
 	   FordStar			= ( SELECT TOP 1 FordStar FROM Agente WHERE Agente.Agente = VentaD.Agente ),
-	  RenglonID			= MAX(RenglonID),
-	  Renglon			= MAX(Renglon),
-	  RenglonSub		= MAX(RenglonSub),
+	  RenglonID			= MAX(VentaD.RenglonID),
+	  Renglon			= MAX(VentaD.Renglon),
+	  RenglonSub		= MAX(VentaD.RenglonSub),
 	  Agente			= VentaD.Agente,
-	  Nombre			= ( SELECT TOP 1 Agente.Nombre FROM Agente WHERE Agente.Agente = VentaD.Agente )
+	  Nombre			= ( SELECT TOP 1 Agente.Nombre FROM Agente WHERE Agente.Agente = VentaD.Agente ),
+	  IDDanno			= MAX(CA_VentaD.IDDanno),
+	  RenglonDanno		= MAX(CA_VentaD.RenglonDanno),
+	  RenglonIDDanno	= MAX(CA_VentaD.RenglonIDSubDanno),
+	  RenglonSubDanno	= MAX(CA_VentaD.RenglonSubDanno),
+	  Adicional			= (CAST(MAX(CAST(CA_VentaD.Adicional as INT)) AS BIT)),
+		Autoriz_grte	= (CAST(MAX(CAST(CA_VentaD.Autoriz_grte as INT)) AS BIT)),
+		Autoriz_grtias	= (CAST(MAX(CAST(CA_VentaD.Autoriz_grtias as INT)) AS BIT))
 		
 	   FROM VentaD 
 			-- validar por que solo debe aplicar para articulo de tipo normal es decir de tipo refacciones
 			JOIN art on ventad.articulo = art.articulo --and art.tipo = 'Normal' 
+		LEFT JOIN CA_VentaD ON VentaD.ID = CA_VentaD.VentaID AND VentaD.Renglon = CA_VentaD.Renglon AND VentaD.RenglonID = CA_VentaD.RenglonID AND VentaD.RenglonSub = CA_VentaD.RenglonSub
 	   WHERE ventad.cantidad > isnull( ventad.cantidadcancelada, 0 ) 
        --AND ID = 386560 
 	
@@ -48,3 +56,18 @@ CREATE VIEW vwCA_GarantiasTecnicosDisponibles AS
 	AND "Estatus" = 'ALTA'
 	AND "Categoria" = 'Servicio'
 	AND "Jornada" IS NOT NULL
+
+-- =============================================
+-- Autor:Manuel López V.
+-- Creación: 04/02/2022
+-- Descripción: Vista para obtener las manos de obra que son de tipo daño relacionado
+-- =============================================
+IF EXISTS (SELECT * FROM SYSOBJECTS WHERE ID = OBJECT_ID('dbo.vwCA_GarantiasMoDannos') AND Type = 'V')
+  DROP VIEW dbo.vwCA_GarantiasMoDannos
+GO
+CREATE VIEW vwCA_GarantiasMoDannos 
+AS
+SELECT * FROM vwCA_GarantiasPartsOperaciones as VentaD WHERE CONCAT(IdVenta, ',',Renglon, ',', RenglonID, ',', RenglonSub) NOT IN (SELECT  CONCAT(IDDanno, ',',RenglonDanno, ',', RenglonIDSubDanno, ',', RenglonSubDanno) FROM CA_VentaD WHERE IDDanno IS NOT NULL AND IdDanno = VentaD.IdVenta)
+
+
+--select vwCA_GarantiasMoDannos.*,CA_VentaD.ID AS idDetalles FROM vwCA_GarantiasMoDannos LEFT JOIN CA_VentaD ON IdVenta = CA_VentaD.VentaID AND vwCA_GarantiasMoDannos.Renglon = CA_VentaD.Renglon AND vwCA_GarantiasMoDannos.RenglonID = CA_VentaD.RenglonID AND vwCA_GarantiasMoDannos.RenglonSub = CA_VentaD.RenglonSub WHERE Tipo = 'Servicio' AND IdVenta = 386581
