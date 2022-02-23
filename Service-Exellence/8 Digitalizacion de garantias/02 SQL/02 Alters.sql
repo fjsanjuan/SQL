@@ -33,3 +33,15 @@ ALTER TABLE firma_electronica ADD firma_refacc nvarchar(MAX)
 
 --almacena firma de tecnico cuando este autoriza 
 ALTER TABLE firma_electronica ADD firma_tecnico nvarchar(MAX)
+
+--almacena el ID de venta del daño al que esta relacionado la mano en VentaD
+ALTER TABLE CA_VentaD ADD IDDanno INT
+
+--almacena el Renglon de venta del daño al que esta relacionado la mano en VentaD
+ALTER TABLE CA_VentaD ADD RenglonDanno FLOAT(53)
+
+--almacena el RenglonSub de venta del daño al que esta relacionado la mano en VentaD
+ALTER TABLE CA_VentaD ADD RenglonSubDanno INT
+
+--almacena el RenglonID de venta del daño al que esta relacionado la mano en VentaD
+ALTER TABLE CA_VentaD ADD RenglonIDSubDanno INT
