@@ -45,3 +45,6 @@ ALTER TABLE CA_VentaD ADD RenglonSubDanno INT
 
 --almacena el RenglonID de venta del daño al que esta relacionado la mano en VentaD
 ALTER TABLE CA_VentaD ADD RenglonIDSubDanno INT
+
+--almacena 
+ALTER TABLE CA_VentaD ADD Autoriz_jefe BIT DEFAULT 0

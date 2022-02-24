@@ -30,8 +30,12 @@ SELECT IdVenta			= VentaD.Id,
 	  RenglonIDDanno	= MAX(CA_VentaD.RenglonIDSubDanno),
 	  RenglonSubDanno	= MAX(CA_VentaD.RenglonSubDanno),
 	  Adicional			= (CAST(MAX(CAST(CA_VentaD.Adicional as INT)) AS BIT)),
-		Autoriz_grte	= (CAST(MAX(CAST(CA_VentaD.Autoriz_grte as INT)) AS BIT)),
-		Autoriz_grtias	= (CAST(MAX(CAST(CA_VentaD.Autoriz_grtias as INT)) AS BIT))
+	  Autoriz_grte	= (CAST(MAX(CAST(CA_VentaD.Autoriz_grte as INT)) AS BIT)),
+	  Autoriz_grtias	= (CAST(MAX(CAST(CA_VentaD.Autoriz_grtias as INT)) AS BIT)),
+	  Autoriz_jefe	= (CAST(MAX(CAST(CA_VentaD.Autoriz_jefe as INT)) AS BIT)),
+	  Nombre_gte =  CA_VentaD.nombre_gte,
+	  Nombre_grtias =  CA_VentaD.nombre_grtias,
+	  Nombre_jefe=  CA_VentaD.nombre_jefe
 		
 	   FROM VentaD 
 			-- validar por que solo debe aplicar para articulo de tipo normal es decir de tipo refacciones
@@ -40,7 +44,7 @@ SELECT IdVenta			= VentaD.Id,
 	   WHERE ventad.cantidad > isnull( ventad.cantidadcancelada, 0 ) 
        --AND ID = 386560 
 	
-	   GROUP BY precio,cantidad,ventad.impuesto1,ventad.articulo,DescripcionExtra,Agente,Art.ClaveFabricante,art.Tipo,VentaD.Id
+	   GROUP BY precio,cantidad,ventad.impuesto1,ventad.articulo,DescripcionExtra,Agente,Art.ClaveFabricante,art.Tipo,VentaD.Id,CA_VentaD.nombre_gte,CA_VentaD.nombre_grtias,CA_VentaD.nombre_jefe
 
 -- =============================================
 -- Autor:Manuel López V.
